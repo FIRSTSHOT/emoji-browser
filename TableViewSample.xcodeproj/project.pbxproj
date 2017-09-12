@@ -13,6 +13,7 @@
 		175883051F67DB89009E220E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 175883041F67DB89009E220E /* Assets.xcassets */; };
 		175883081F67DB89009E220E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 175883061F67DB89009E220E /* LaunchScreen.storyboard */; };
 		175883101F67E03A009E220E /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1758830F1F67E03A009E220E /* Emoji.swift */; };
+		175883141F67EABF009E220E /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175883131F67EABF009E220E /* SecondViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		175883071F67DB89009E220E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		175883091F67DB89009E220E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1758830F1F67E03A009E220E /* Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
+		175883131F67EABF009E220E /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				175882FD1F67DB89009E220E /* AppDelegate.swift */,
 				175882FF1F67DB89009E220E /* ViewController.swift */,
+				175883131F67EABF009E220E /* SecondViewController.swift */,
 				1758830F1F67E03A009E220E /* Emoji.swift */,
 				175883011F67DB89009E220E /* Main.storyboard */,
 				175883041F67DB89009E220E /* Assets.xcassets */,
@@ -139,6 +142,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				175883141F67EABF009E220E /* SecondViewController.swift in Sources */,
 				175883101F67E03A009E220E /* Emoji.swift in Sources */,
 				175883001F67DB89009E220E /* ViewController.swift in Sources */,
 				175882FE1F67DB89009E220E /* AppDelegate.swift in Sources */,
