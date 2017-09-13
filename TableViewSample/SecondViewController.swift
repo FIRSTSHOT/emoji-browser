@@ -17,7 +17,6 @@ class SecondViewController: UIViewController {
     }
     
        
-    @IBOutlet weak var labelTitle: UILabel!
     @IBOutlet weak var labelSymbol: UILabel!
     @IBOutlet weak var labelDescription: UILabel!
     
@@ -25,7 +24,6 @@ class SecondViewController: UIViewController {
         super.viewDidLoad()
         
         guard let emoji = selectedEmoji else { return }
-        labelTitle.text = emoji.title
         labelSymbol.text = emoji.symbol
         labelDescription.text = emoji.description
     }

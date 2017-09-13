@@ -56,8 +56,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-       
         tableView.deselectRow(at: indexPath, animated: true)
         selectedEmoji = emojis[indexPath.row]
         performSegue(withIdentifier: "segueDetail", sender: self)
