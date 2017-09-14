@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    
     @IBOutlet weak var tableView: UITableView?
     var emojis: [Emoji?] = []
     
@@ -21,13 +22,14 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         title = "My Table"
         parseJSON()
+        //setupDataSource()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
     }
-
+    
     
     func parseJSON(){
         
@@ -46,7 +48,7 @@ class ViewController: UIViewController {
                 guard let dictionary = json else { return }
                 for item in dictionary {
                     guard let item1 = item as? [String:Any] else { return }
-  
+                    
                     if let title = item1["description"] as? String,
                         let symbol = item1["emoji"] as? String,
                         let category = item1["category"] as? String {
@@ -75,6 +77,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "sampleID", for: indexPath)
         if let emoji = emojis[indexPath.row] as? Emoji {
+            if (emoji.title?.characters.count)! > 30 {
+              cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:15)
+            }
+            if (emoji.title?.characters.count)! > 40 {
+                cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:13)
+            }
             cell.textLabel?.text = emoji.title
             cell.detailTextLabel?.text = emoji.symbol
         }
@@ -102,4 +110,3 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         secondViewController.selectedEmoji = emoji
     }
 }
-
