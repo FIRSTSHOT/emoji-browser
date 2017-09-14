@@ -14,7 +14,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
     var emojis: [Emoji?] = []
     
+    var sectionsEmojis: [[String : Any]] = []
+    
+    //var sectionsEmojis: [EmojiCategory] = []
+    
+    var arrayCategory = [String]()
+    
+    var dataEmoji: [EmojiCategory] = []
+
+    
     var selectedEmoji: Emoji?
+    
+    
     
     
     override func viewDidLoad() {
@@ -49,34 +60,86 @@ class ViewController: UIViewController {
                 for item in dictionary {
                     guard let item1 = item as? [String:Any] else { return }
                     
+                    
+                    
+                    // [tile : String, items: [Emoji] ]
                     if let title = item1["description"] as? String,
                         let symbol = item1["emoji"] as? String,
                         let category = item1["category"] as? String {
+                        
                         let emoji = Emoji(title: title, description: category, symbol: symbol)
+                        
+                        if let existingIndex = self.sectionsEmojis.index(where:
+                            {
+                            if let title = $0["title"] as? String {
+                                return title == category
+                            }
+                            return false })
+                        {
+                            
+                            var existingCategory = self.sectionsEmojis[existingIndex]
+                            
+                            if var items = existingCategory["items"] as? [Emoji] {
+                                items.append(emoji)
+                                existingCategory["items"] = items
+                                self.sectionsEmojis[existingIndex] = existingCategory
+                            }
+                        } else {
+                            let newCateg = ["title": category, "items": [emoji] ] as [String : Any]
+                            self.sectionsEmojis.append(newCateg)
+                        }
+                        
+                        
+                        
+                        
+                        /*
+                        
+                        if !self.arrayCategory.contains(emoji.description!){
+                            self.arrayCategory.append(emoji.description!)
+                        }
                         self.emojis.append(emoji)
+ */
                     }
                 }
-                print(self.emojis.count)
+                
                 DispatchQueue.main.async(execute: {
                     self.tableView?.reloadData()
                 })
+                
+                print(self.dataEmoji)
+                print(self.arrayCategory)
             }
         }
         task.resume()
         
     }
     
+    
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
+   
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sectionsEmojis.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return emojis.count
+        let category = sectionsEmojis[section]
+        if let items = category["items"] as? [Emoji] {
+            return items.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "sampleID", for: indexPath)
-        if let emoji = emojis[indexPath.row] as? Emoji {
+        
+        let category = sectionsEmojis[indexPath.section]
+        guard let items = category["items"] as? [Emoji] else { return cell }
+        
+        
+        if let emoji = items[indexPath.row] as? Emoji {
             if (emoji.title?.characters.count)! > 30 {
               cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:15)
             }
@@ -89,14 +152,24 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        selectedEmoji = emojis[indexPath.row]
+        let category = sectionsEmojis[indexPath.section]
+        guard let items = category["items"] as? [Emoji] else { return  }
+
+        selectedEmoji = items[indexPath.row]
         performSegue(withIdentifier: "segueDetail", sender: self)
+
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "First" : "Second"
+        let category = sectionsEmojis[section]
+        if let title = category["title"] as? String {
+            return title
+        }
+
+        return ""
     }
     
     //segue

@@ -16,7 +16,11 @@ class SecondViewController: UIViewController {
             title = selectedEmoji?.title
         }
     }
-    @IBOutlet weak var webView: UIWebView!
+    
+    @IBOutlet weak var labelDescrp: UILabel!
+    @IBOutlet weak var labelSymbol: UILabel!
+    @IBOutlet weak var labelDescription: UILabel!
+    //@IBOutlet weak var webView: UIWebView!
        
     
     override func viewDidLoad() {
@@ -25,11 +29,21 @@ class SecondViewController: UIViewController {
         let newUrl = modifyURL(title: title!)
         print(newUrl)
         let url = NSURL (string: newUrl);
-        let request = NSURLRequest(url: url! as URL);
-        webView.loadRequest(request as URLRequest);
-        //guard let emoji = selectedEmoji else { return }
-        //labelSymbol.text = emoji.symbol
-        //labelDescription.text = emoji.description
+        //let request = NSURLRequest(url: url! as URL);
+        //webView.loadRequest(request as URLRequest);
+        guard let emoji = selectedEmoji else { return }
+        labelSymbol.text = emoji.symbol
+        
+        do {
+            let myHTMLString = try String(contentsOf: url! as URL, encoding: .ascii)
+            //parseHTML(html: url)
+            //print("HTML : \(myHTMLString)")
+            labelDescrp.text = myHTMLString
+            //print(labelDescription.text)
+
+        } catch let error {
+            print("Error: \(error)")
+        }
     }
     
     func modifyURL(title: String) -> String
@@ -38,5 +52,6 @@ class SecondViewController: UIViewController {
         titleNoEspace = titleNoEspace.replacingOccurrences(of: "&", with: "and", options: .literal, range: nil)
         return urlEmoji + titleNoEspace
     }
+    
     
 }
