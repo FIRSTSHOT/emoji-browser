@@ -21,19 +21,13 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         title = "My Table"
         parseJSON()
-        //setupDataSource()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
     }
-    
-    func setupDataSource() {
-        emojis.append(Emoji(title: "Grinning Face", description: "A face with a big open (grinning) mouth, showing teeth. Differs only slightly from the Smiling Face With Open Mouth And Smiling Eyes by the fact that these eyes are small circles, instead of the emoji-style smiling eyes.", symbol: "😀"))
-        emojis.append(Emoji(title: "Face With Tears of Joy", description: "A laughing emoji which at small sizes is often mistaken for being tears of sadness. This emoji is laughing so much that it is crying tears of joy /n This emoji has been in the top 10 most popular emojis on Emojipedia for all of 2015, and was deemed the 2015 word of the year by the Oxford English Dictionary", symbol: "😂"))
-        emojis.append(Emoji(title: "Speak-No-Evil Monkey", description: "This Speak-No-Evil monkey has hands covering his mouth, as part of the proverb “see no evil, hear no evil, speak no evil”.", symbol: "🙊"))
-    }
+
     
     func parseJSON(){
         

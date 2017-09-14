@@ -34,9 +34,9 @@ class SecondViewController: UIViewController {
     
     func modifyURL(title: String) -> String
     {
-        let titleNoEspace = title.replacingOccurrences(of: " ", with: "-", options: .literal, range: nil)
-        let titleAnd = titleNoEspace.replacingOccurrences(of: "&", with: "and", options: .literal, range: nil)
-        return urlEmoji + titleAnd
+        var titleNoEspace = title.replacingOccurrences(of: " ", with: "-", options: .literal, range: nil)
+        titleNoEspace = titleNoEspace.replacingOccurrences(of: "&", with: "and", options: .literal, range: nil)
+        return urlEmoji + titleNoEspace
     }
     
 }
