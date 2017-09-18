@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class SecondViewController: UIViewController {
     
     let urlEmoji: String = "https://emojipedia.org/"
@@ -36,8 +37,21 @@ class SecondViewController: UIViewController {
         
         do {
             let myHTMLString = try String(contentsOf: url! as URL, encoding: .ascii)
-            //parseHTML(html: url)
-            //print("HTML : \(myHTMLString)")
+//            if let doc = HTML(html: myHTMLString, encoding: .utf8) {
+//                print(doc.title)
+//                
+//                // Search for nodes by CSS
+//                for link in doc.css("a, link") {
+//                    print(link.text)
+//                    print(link["href"])
+//                }
+//                
+//                // Search for nodes by XPath
+//                for link in doc.xpath("//a | //link") {
+//                    print(link.text)
+//                    print(link["href"])
+//                }
+//            }
             labelDescrp.text = myHTMLString
             //print(labelDescription.text)
 

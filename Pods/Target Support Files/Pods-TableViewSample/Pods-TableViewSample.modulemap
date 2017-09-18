@@ -1,0 +1,6 @@
+framework module Pods_TableViewSample {
+  umbrella header "Pods-TableViewSample-umbrella.h"
+
+  export *
+  module * { export * }
+}

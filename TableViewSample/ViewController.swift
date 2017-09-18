@@ -12,20 +12,14 @@ class ViewController: UIViewController {
     
     
     @IBOutlet weak var tableView: UITableView?
-    var emojis: [Emoji?] = []
     
-    var sectionsEmojis: [[String : Any]] = []
+    var sectionsEmojis: [EmojiCategory] = []
     
-    var sectionsEmojis1: [EmojiCategory] = []
-    
-    var arrayCategory = [String]()
-    
-    var dataEmoji: [EmojiCategory] = []
 
     
     var selectedEmoji: Emoji?
     
-    
+    // apple Mach-O Linker Error Linker command failed with exit code 1 use -v see invocation
     
     
     override func viewDidLoad() {
@@ -33,7 +27,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         title = "My Table"
         parseJSON()
-        //setupDataSource()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,7 +46,6 @@ class ViewController: UIViewController {
                 var json: [Any]?
                 do {
                     json = try JSONSerialization.jsonObject(with: data) as? [Any]
-                    //print(json)
                 } catch {
                     print(error)
                 }
@@ -60,14 +53,13 @@ class ViewController: UIViewController {
                 for item in dictionary {
                     guard let item1 = item as? [String:Any] else { return }
                     
-                    // [tile : String, items: [Emoji] ]
                     if let title = item1["description"] as? String,
                         let symbol = item1["emoji"] as? String,
                         let category = item1["category"] as? String {
                         
                         let emoji = Emoji(title: title, description: category, symbol: symbol)
                         
-                        if let existingIndex = self.sectionsEmojis1.index(where:
+                        if let existingIndex = self.sectionsEmojis.index(where:
                             {
                             if let title = $0.category {
                                 return title == category
@@ -75,32 +67,24 @@ class ViewController: UIViewController {
                             return false })
                         {
                             
-                            var existingCategory = self.sectionsEmojis1[existingIndex]
+                            var existingCategory = self.sectionsEmojis[existingIndex]
                             
                             if var items = existingCategory.items as? [Emoji] {
                                 items.append(emoji)
                                 existingCategory.items = items
-                                self.sectionsEmojis1[existingIndex] = existingCategory
+                                self.sectionsEmojis[existingIndex] = existingCategory
                             }
                         } else {
                             //let newCateg = ["title": category, "items": [emoji] ] as [String : Any]
                             let newCateg = EmojiCategory(category: category, items: [emoji])
-                            self.sectionsEmojis1.append(newCateg)
+                            self.sectionsEmojis.append(newCateg)
                         }
                         
                         
                         
-                        
-                        /*
-                        
-                        if !self.arrayCategory.contains(emoji.description!){
-                            self.arrayCategory.append(emoji.description!)
-                        }
-                        self.emojis.append(emoji)
- */
-                    }
+                                        }
                 }
-                print(self.sectionsEmojis1.count)
+                print(self.sectionsEmojis.count)
                 DispatchQueue.main.async(execute: {
                     self.tableView?.reloadData()
                 })
@@ -118,11 +102,11 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionsEmojis1.count
+        return sectionsEmojis.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let category = sectionsEmojis1[section]
+        let category = sectionsEmojis[section]
         if let items = category.items {
             return items.count
         }
@@ -132,7 +116,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "sampleID", for: indexPath)
         
-        let category = sectionsEmojis1[indexPath.section]
+        let category = sectionsEmojis[indexPath.section]
         guard let items = category.items else { return cell }
         
         
@@ -152,7 +136,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let category = sectionsEmojis1[indexPath.section]
+        let category = sectionsEmojis[indexPath.section]
         guard let items = category.items  else { return  }
 
         selectedEmoji = items[indexPath.row]
@@ -161,7 +145,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let category = sectionsEmojis1[section]
+        let category = sectionsEmojis[section]
         
             if let title = category.category  {
                 return title
