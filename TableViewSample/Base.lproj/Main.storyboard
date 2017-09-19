@@ -89,7 +89,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yLK-TC-giw">
-                                <rect key="frame" x="0.0" y="221" width="375" height="438"/>
+                                <rect key="frame" x="0.0" y="221" width="375" height="397"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -106,9 +106,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zjJ-nC-U4a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912.8" y="133.5832083958021"/>
+            <point key="canvasLocation" x="1530" y="-684"/>
         </scene>
-        <!--Item 2-->
+        <!--View Controller-->
         <scene sceneID="Cva-Xp-svK">
             <objects>
                 <viewController id="7ci-OL-QFJ" sceneMemberID="viewController">
@@ -121,7 +121,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="jZE-b0-lGx"/>
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="jZE-b0-lGx"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7MR-BY-i6f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -137,19 +137,19 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="7ci-OL-QFJ" kind="relationship" relationship="viewControllers" id="uHw-aB-W91"/>
                         <segue destination="d9h-O6-oKl" kind="relationship" relationship="viewControllers" id="DUp-Y3-Fg1"/>
+                        <segue destination="7ci-OL-QFJ" kind="relationship" relationship="viewControllers" id="uHw-aB-W91"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0TL-cM-se9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1567" y="-260"/>
         </scene>
-        <!--Item-->
+        <!--Emoji-->
         <scene sceneID="AGg-pL-2eQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="d9h-O6-oKl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="bde-nK-6dR"/>
+                    <tabBarItem key="tabBarItem" title="Emoji" id="bde-nK-6dR"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dna-Nl-b8W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

@@ -22,9 +22,16 @@ class SecondViewController: UIViewController {
     @IBOutlet weak var labelDescrp: UILabel!
     @IBOutlet weak var labelSymbol: UILabel!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let rightButtonItem = UIBarButtonItem.init(
+            title: "Title",
+            style: .done,
+            target: self,
+            action: #selector(rightButtonAction(sender:))
+        )
         
         guard let emoji = selectedEmoji else { return }
         labelSymbol.text = emoji.symbol
@@ -42,7 +49,13 @@ class SecondViewController: UIViewController {
             }
         }
         
+        
     }
+    
+    func rightButtonAction(sender: UIBarButtonItem){
+        print("add to favorite")
+    }
+
     
     func modifyURL(title: String) -> String
     {
@@ -69,16 +82,28 @@ class SecondViewController: UIViewController {
                 var linesArray: [String] = []
                 showString?.enumerateLines { line, _ in linesArray.append(line) }
                 showString = linesArray.filter{!$0.isEmpty}.joined(separator: "\n")
-              
-            }
+                                }
             
         }
         if showString != nil{
-            return showString!}
+            // delete text start with "Copy and paste this emoji"
+           
+            guard let range = showString?.range(of: "Copy and paste this emoji") else {
+                return showString!
+            }
+            
+            showString = showString?.substring(with:(showString?.startIndex)!..<range.lowerBound)
+            return showString!
+            }
         else {showString = ""
                return showString!}
     }
+    
+    
 
 }
-    
+
+
+
+
     
