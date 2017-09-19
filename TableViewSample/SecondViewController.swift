@@ -18,6 +18,7 @@ class SecondViewController: UIViewController {
             title = selectedEmoji?.title
         }
     }
+    var sourceArray: [[String:String?]]?
     
     @IBOutlet weak var labelDescrp: UILabel!
     @IBOutlet weak var labelSymbol: UILabel!
@@ -25,7 +26,7 @@ class SecondViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        sourceArray = loadData()
         guard let emoji = selectedEmoji else { return }
         labelSymbol.text = emoji.symbol
         // background thread
@@ -92,7 +93,8 @@ class SecondViewController: UIViewController {
 }
 
 extension SecondViewController {
-
+    
+    
     @IBAction func addToFavorites(sender: UIBarButtonItem) {
         print("add to favo")
         sender.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
@@ -108,23 +110,26 @@ extension SecondViewController {
         let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first
         //print("this is the url path in the documentDirectory \(url)")
         //3 - creates a new path component and creates a new file called "Data" which is where we will store our Data array.
-        return (url!.appendingPathComponent("DataEmojiFavo").path)
+        return (url!.appendingPathComponent("dataEmojiFavo").path)
     }
     
     func saveData(item: Emoji) {
         let dict = selectedEmoji?.toDictionary()
-        var sourceArray = [[ : ]]
-        sourceArray.append(dict!)
+        
+        sourceArray?.append(dict!)
         NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
-        print("data save")
-        loadData()
+        print("data save \(sourceArray?.count) ")
+        
+        
     }
     
-    func loadData() {
+    func loadData() -> [[String : String?]]? {
         //6 - if we can get back our data from our archives (load our data), get our data along our file path and cast it as an array of ShoppingItems
-        if let ourData = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? Any {
-            print(ourData)
+        if let ourData = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? [[String : String?]] {
+            return ourData
+            print(sourceArray)
         }
+        return nil
     }
 
 }
