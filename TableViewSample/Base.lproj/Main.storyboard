@@ -98,7 +98,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="iOF-KF-50m"/>
+                    <navigationItem key="navigationItem" id="iOF-KF-50m">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" image="star_000000_28" id="xLo-if-gt0">
+                            <connections>
+                                <action selector="addToFavoritesWithSender:" destination="i2i-nU-0jh" id="RAK-6H-mHD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="labelDescrp" destination="yLK-TC-giw" id="zMQ-yD-kM8"/>
                         <outlet property="labelSymbol" destination="2Uw-HY-S7N" id="mFB-ct-VGP"/>
@@ -165,4 +171,7 @@
             <point key="canvasLocation" x="-590" y="-684"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="star_000000_28" width="28" height="28"/>
+    </resources>
 </document>

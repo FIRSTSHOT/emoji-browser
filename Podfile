@@ -6,6 +6,7 @@ target 'TableViewSample' do
   use_frameworks!
    pod 'Kanna', '~> 2.1.0'
    pod 'Alamofire', '~> 4.5.1'
+   pod 'SQLite.swift'
   # Pods for TableViewSample
 
 end

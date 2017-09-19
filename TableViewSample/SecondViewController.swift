@@ -26,19 +26,12 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let rightButtonItem = UIBarButtonItem.init(
-            title: "Title",
-            style: .done,
-            target: self,
-            action: #selector(rightButtonAction(sender:))
-        )
-        
         guard let emoji = selectedEmoji else { return }
         labelSymbol.text = emoji.symbol
-        //labelDescrp.text = parsHTML(title: title!)
-        
+        // background thread
         DispatchQueue.global(qos: .background).async {
             self.descriptionString = self.parsHTML(title: self.title!)
+            
             DispatchQueue.main.async {
                 guard self.descriptionString != "" else
                 {   self.labelSymbol.text = "X"
@@ -52,10 +45,7 @@ class SecondViewController: UIViewController {
         
     }
     
-    func rightButtonAction(sender: UIBarButtonItem){
-        print("add to favorite")
-    }
-
+    
     
     func modifyURL(title: String) -> String
     {
@@ -99,11 +89,16 @@ class SecondViewController: UIViewController {
                return showString!}
     }
     
-    
-
 }
 
+extension SecondViewController {
 
+    @IBAction func addToFavorites(sender: UIBarButtonItem) {
+        print("add to favo")
+    }
+
+
+}
 
 
     
