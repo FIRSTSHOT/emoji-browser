@@ -99,9 +99,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="iOF-KF-50m">
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" image="star_000000_28" id="xLo-if-gt0">
+                        <barButtonItem key="rightBarButtonItem" image="star_000000_28" id="xLo-if-gt0">
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="addToFavoritesWithSender:" destination="i2i-nU-0jh" id="RAK-6H-mHD"/>
+                                <action selector="addToFavoritesWithSender:" destination="i2i-nU-0jh" id="aMX-OO-8ic"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -50,6 +50,7 @@ class SQLiteEmojiDB {
         do{
             let insert = emojiFavoris.insert(symbolEmoji <- csymbolEmoji, titleEmoji <- cnameEmoji, descriptionEmoji <- cdescriptionEmoji)
             let id = try db!.run(insert)
+            print(insert.asSQL())
             return id
         }catch{
                 print("Insert failed")

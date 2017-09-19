@@ -95,8 +95,37 @@ extension SecondViewController {
 
     @IBAction func addToFavorites(sender: UIBarButtonItem) {
         print("add to favo")
+        sender.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
+        let emojiFavo = Emoji(title: title!, description: labelDescrp.text!, symbol: labelSymbol.text!)
+        saveData(item: emojiFavo)
+        
     }
-
+    
+    var filePath: String {
+        // creates a directory to where we are saving it
+        let manager = FileManager.default
+        //2 - this returns an array of urls from our documentDirectory and we take the first path
+        let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first
+        //print("this is the url path in the documentDirectory \(url)")
+        //3 - creates a new path component and creates a new file called "Data" which is where we will store our Data array.
+        return (url!.appendingPathComponent("DataEmojiFavo").path)
+    }
+    
+    func saveData(item: Emoji) {
+        let dict = selectedEmoji?.toDictionary()
+        var sourceArray = [[ : ]]
+        sourceArray.append(dict!)
+        NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
+        print("data save")
+        loadData()
+    }
+    
+    func loadData() {
+        //6 - if we can get back our data from our archives (load our data), get our data along our file path and cast it as an array of ShoppingItems
+        if let ourData = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? Any {
+            print(ourData)
+        }
+    }
 
 }
 
