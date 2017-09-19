@@ -11,6 +11,8 @@ import Kanna
 
 class SecondViewController: UIViewController {
     
+    let urlEmoji: String = "https://emojipedia.org/"
+    var descriptionString: String?
     var selectedEmoji: Emoji? {
         didSet {
             title = selectedEmoji?.title
@@ -26,13 +28,25 @@ class SecondViewController: UIViewController {
         
         guard let emoji = selectedEmoji else { return }
         labelSymbol.text = emoji.symbol
-        labelDescrp.text = parsHTML(title: title!)
+        //labelDescrp.text = parsHTML(title: title!)
+        
+        DispatchQueue.global(qos: .background).async {
+            self.descriptionString = self.parsHTML(title: self.title!)
+            DispatchQueue.main.async {
+                guard self.descriptionString != "" else
+                {   self.labelSymbol.text = "X"
+                    self.labelDescrp.text = " "
+                    return
                 }
+                self.labelDescrp.text = self.descriptionString
+            }
+        }
+        
     }
     
     func modifyURL(title: String) -> String
     {
-        let urlEmoji: String = "https://emojipedia.org/"
+        
         var titleNoEspace = title.replacingOccurrences(of: " ", with: "-", options: .literal, range: nil)
         titleNoEspace = titleNoEspace.replacingOccurrences(of: "&", with: "and", options: .literal, range: nil)
         return urlEmoji + titleNoEspace
@@ -51,14 +65,20 @@ class SecondViewController: UIViewController {
             for show in doc.css("section[class^='description']") {
                 // Strip the string of surrounding whitespace.
                 showString = show.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                // delete empty line
                 var linesArray: [String] = []
                 showString?.enumerateLines { line, _ in linesArray.append(line) }
-                
                 showString = linesArray.filter{!$0.isEmpty}.joined(separator: "\n")
+              
             }
             
         }
-        
-        return showString!
-        
+        if showString != nil{
+            return showString!}
+        else {showString = ""
+               return showString!}
+    }
+
 }
+    
+    
