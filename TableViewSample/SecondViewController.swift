@@ -101,13 +101,24 @@ extension SecondViewController {
     
     @IBAction func addToFavorites(sender: UIBarButtonItem) {
         print("add to favo")
+//        switch sender.tintColor {
+//        case #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1):
+//            <#code#>
+//        case #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1):
+//            <#code#>
+//        default:
+//            <#code#>
+//        }
         if sender.tintColor == #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1) {
-           sourceArray?.remove(at: selectedEmoji?.toDictionary())
-        }
+           sourceArray?.remove(at: (sourceArray?.index(where: { $0 == (selectedEmoji?.toDictionary())! }))!)
+            print("delete emoji from favo")
+            NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
+            sender.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        }else if sender.tintColor == #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1) {
         sender.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
         let emojiFavo = Emoji(title: title!, description: labelDescrp.text!, symbol: labelSymbol.text!)
         saveData(item: emojiFavo)
-        
+        }
     }
     
     var filePath: String {

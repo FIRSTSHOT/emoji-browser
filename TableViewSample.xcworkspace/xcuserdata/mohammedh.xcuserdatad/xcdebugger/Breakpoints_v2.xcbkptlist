@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TableViewSample/SecondViewController.swift"
-            timestampString = "527600133.064898"
+            timestampString = "527610398.846021"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "addToFavorites(sender:)"
             landmarkType = "7">
          </BreakpointContent>

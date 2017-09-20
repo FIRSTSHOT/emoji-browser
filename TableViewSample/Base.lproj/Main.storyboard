@@ -89,7 +89,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yLK-TC-giw">
-                                <rect key="frame" x="0.0" y="221" width="375" height="397"/>
+                                <rect key="frame" x="0.0" y="213" width="375" height="397"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -114,7 +114,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zjJ-nC-U4a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1530" y="-684"/>
+            <point key="canvasLocation" x="1812" y="-260"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="R2E-wq-ayb">
@@ -225,6 +225,7 @@
                     <navigationItem key="navigationItem" id="kp8-Ve-76a"/>
                     <connections>
                         <outlet property="tableView" destination="dhS-m5-DQg" id="iaA-Jn-JyM"/>
+                        <segue destination="i2i-nU-0jh" kind="show" identifier="segueFavoDetail" id="KXp-gK-Vqt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXo-O8-12i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -235,4 +236,7 @@
     <resources>
         <image name="star_000000_28" width="28" height="28"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="KXp-gK-Vqt"/>
+    </inferredMetricsTieBreakers>
 </document>

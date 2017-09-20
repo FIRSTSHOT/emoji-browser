@@ -13,8 +13,10 @@ class FavoritesViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
 
     var sourceArray: [[String:String?]]?
-    
+    var selectedEmojiFavo: Emoji?
+
     override func viewDidLoad() {
+        self.title = "Favorites"
         sourceArray = SecondViewController().loadData()
         tableView?.tableFooterView = UIView()
         DispatchQueue.main.async(execute: {
@@ -51,8 +53,20 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        tableView.deselectRow(at: indexPath, animated: true)
+        if let emojiFavoDict = sourceArray?[indexPath.row] {
+            selectedEmojiFavo = Emoji(dictionory: emojiFavoDict as! Dictionary<String, String>)
+        }
+        performSegue(withIdentifier: "segueFavoDetail", sender: self)
     }
+    //segue
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let emoji = selectedEmojiFavo else {
+            return
+        }
+        
+        let secondViewController = segue.destination as! SecondViewController
+        secondViewController.selectedEmoji = emoji
+    }
    }
