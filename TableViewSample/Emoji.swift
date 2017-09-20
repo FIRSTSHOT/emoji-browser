@@ -20,8 +20,15 @@ struct Emoji {
         self.symbol = symbol
     }
     
-    func toDictionary() -> [String:String?] {
-        return ["title" : title, "description" : description, "symbol": symbol]
+    init(dictionory: Dictionary<String, String>) {
+        self.title = dictionory["title"]
+        self.symbol = dictionory["symbol"]
+        self.description = dictionory["description"]
+
+    }
+    
+    func toDictionary() -> [String:String] {
+        return ["title" : title!, "description" : description!, "symbol": symbol!]
     }
     
 }
