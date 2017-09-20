@@ -84,7 +84,6 @@ class ViewController: UIViewController {
                         
                                         }
                 }
-                print(self.sectionsEmojis.count)
                 DispatchQueue.main.async(execute: {
                     self.tableView?.reloadData()
                 })
@@ -162,7 +161,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        let secondViewController = segue.destination as! SecondViewController
+        var secondViewController = segue.destination as! SecondViewController
+        secondViewController.flag = 1
         secondViewController.selectedEmoji = emoji
     }
 }

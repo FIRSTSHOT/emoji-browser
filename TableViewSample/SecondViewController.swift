@@ -19,8 +19,14 @@ class SecondViewController: UIViewController {
             title = selectedEmoji?.title
         }
     }
+    var selectedEmojiFavo: Emoji? {
+        didSet {
+            title = selectedEmoji?.title
+        }
+    }
     var sourceArray: [[String:String]]?
     
+    var flag: Int?
     
     @IBOutlet weak var labelDescrp: UILabel!
     @IBOutlet weak var labelSymbol: UILabel!
@@ -30,11 +36,13 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sourceArray = loadData()
-        if (sourceArray?.contains(where: { $0 == (selectedEmoji?.toDictionary())! }))!{
-            buttonAddFAvo.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
-        }
-        guard let emoji = selectedEmoji else { return }
-        labelSymbol.text = emoji.symbol
+        
+        if flag == 1 {
+            if (sourceArray?.contains(where: { $0 == (selectedEmoji?.toDictionary())! }))!{
+                buttonAddFAvo.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
+            }
+            guard let emoji = selectedEmoji else { return }
+            labelSymbol.text = emoji.symbol
         // background thread
         DispatchQueue.global(qos: .background).async {
             self.descriptionString = self.parsHTML(title: self.title!)
@@ -48,7 +56,14 @@ class SecondViewController: UIViewController {
                 self.labelDescrp.text = self.descriptionString
             }
         }
-        
+        } else if flag == 2 {
+            if (sourceArray?.contains(where: { $0 == (selectedEmojiFavo?.toDictionary())! }))!{
+                buttonAddFAvo.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
+            }
+            guard let emoji = selectedEmojiFavo else { return }
+            labelSymbol.text = emoji.symbol
+            self.labelDescrp.text = emoji.description
+        }
         
     }
     
@@ -65,7 +80,6 @@ class SecondViewController: UIViewController {
     func parsHTML(title : String) -> String {
         var showString: String?
         let newUrl = modifyURL(title: title)
-        print(newUrl)
         let url = NSURL (string: newUrl);
         
         if let doc = HTML(url: url! as URL, encoding: .utf8)
@@ -102,34 +116,26 @@ extension SecondViewController {
     
     
     @IBAction func addToFavorites(sender: UIBarButtonItem) {
-        print("add to favo")
-//        switch sender.tintColor {
-//        case #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1):
-//            <#code#>
-//        case #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1):
-//            <#code#>
-//        default:
-//            <#code#>
-//        }
-        if sender.tintColor == #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1) {
+        
+        if (sourceArray?.contains(where: { $0 == (selectedEmoji?.toDictionary())! }))! {
             sourceArray?.remove(at: (sourceArray?.index(where: { $0 == (selectedEmoji?.toDictionary())! }))!)
-            print("delete emoji from favo")
             saveDataArray(array: sourceArray)
             sender.tintColor = #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1)
         } else {
-            sender.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
-        let emojiFavo = Emoji(title: title!, description: labelDescrp.text!, symbol: labelSymbol.text!)
-        saveData(item: emojiFavo)
+            if !(self.labelDescrp.text?.isEmpty)!{
+                sender.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
+                let emojiFavo = Emoji(title: title!, description: descriptionString!, symbol: labelSymbol.text!)
+                saveData(item: emojiFavo)
+        }
         }
     }
     
     
     func saveData(item: Emoji) {
-        let dict = selectedEmoji?.toDictionary()
-        if !(sourceArray?.contains(where: { $0 == dict! }))!{
-        sourceArray?.append(dict!)
+        let dict = item.toDictionary()
+        if !(sourceArray?.contains(where: { $0 == dict }))!{
+        sourceArray?.append(dict)
         NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
-        print("data save \(sourceArray?.count) ")
         }
     }
     
@@ -142,7 +148,6 @@ extension SecondViewController {
         let manager = FileManager.default
         //2 - this returns an array of urls from our documentDirectory and we take the first path
         let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first
-        //print("this is the url path in the documentDirectory \(url)")
         //3 - creates a new path component and creates a new file called "Data" which is where we will store our Data array.
         return (url!.appendingPathComponent("dataEmojiFavo").path)
     }

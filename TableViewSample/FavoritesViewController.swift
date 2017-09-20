@@ -43,6 +43,13 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let emojiFavoDict = sourceArray?[indexPath.row] {
             let emoji = Emoji(dictionory: emojiFavoDict as! Dictionary<String, String>)
+            if (emoji.title?.characters.count)! > 30 {
+                cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:15)
+            }
+            if (emoji.title?.characters.count)! > 40 {
+                cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:13)
+            }
+
             cell.textLabel?.text = emoji.title
             cell.detailTextLabel?.text = emoji.symbol
                 return cell
@@ -59,6 +66,8 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         }
         performSegue(withIdentifier: "segueFavoDetail", sender: self)
     }
+    
+   
     //segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -66,20 +75,27 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        let secondViewController = segue.destination as! SecondViewController
-        secondViewController.selectedEmoji = emoji
+        var secondViewController = segue.destination as! SecondViewController
+        secondViewController.flag = 2
+        secondViewController.selectedEmojiFavo = emoji
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
-            sourceArray?.remove(at: (sourceArray?.index(where: { $0 == (sourceArray?[indexPath.row])! }))!)
-            print("delete emoji from favo")
-            print(sourceArray)
+            guard let selectedEmoji = sourceArray?[indexPath.row]  else {
+                return
+            }
+            if let index = sourceArray?.index(where: { $0 == selectedEmoji }) {
+            sourceArray?.remove(at: index)
             SecondViewController().saveDataArray(array: sourceArray)
-
+    
             //Reload tableView
             self.tableView?.reloadData()
         }
+        }
+    }
+    
+     func tableView(_ tableView: UITableView, MoveRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
    }

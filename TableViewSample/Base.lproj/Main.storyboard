@@ -138,7 +138,7 @@
         <scene sceneID="AGg-pL-2eQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="d9h-O6-oKl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Emoji" id="bde-nK-6dR"/>
+                    <tabBarItem key="tabBarItem" title="Emoji" image="emoji" id="bde-nK-6dR"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dna-Nl-b8W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -222,7 +222,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="kp8-Ve-76a"/>
+                    <navigationItem key="navigationItem" id="kp8-Ve-76a">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="d2i-LS-wl6"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="dhS-m5-DQg" id="iaA-Jn-JyM"/>
                         <segue destination="i2i-nU-0jh" kind="show" identifier="segueFavoDetail" id="KXp-gK-Vqt"/>
@@ -234,6 +236,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="emoji" width="28" height="28"/>
         <image name="star_000000_28" width="28" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
