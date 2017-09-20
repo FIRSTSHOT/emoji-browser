@@ -69,4 +69,14 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         let secondViewController = segue.destination as! SecondViewController
         secondViewController.selectedEmoji = emoji
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let dict = (sourceArray?[indexPath.row])
+            
+
+            //Reload tableView
+            self.tableView?.reloadData()
+        }
+    }
    }

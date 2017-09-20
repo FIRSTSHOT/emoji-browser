@@ -100,7 +100,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="iOF-KF-50m">
                         <barButtonItem key="rightBarButtonItem" image="star_000000_28" id="xLo-if-gt0">
-                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="addToFavoritesWithSender:" destination="i2i-nU-0jh" id="aMX-OO-8ic"/>
                             </connections>

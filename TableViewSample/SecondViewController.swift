@@ -13,12 +13,14 @@ class SecondViewController: UIViewController {
     
     let urlEmoji: String = "https://emojipedia.org/"
     var descriptionString: String?
+    
     var selectedEmoji: Emoji? {
         didSet {
             title = selectedEmoji?.title
         }
     }
     var sourceArray: [[String:String]]?
+    
     
     @IBOutlet weak var labelDescrp: UILabel!
     @IBOutlet weak var labelSymbol: UILabel!
@@ -110,17 +112,33 @@ extension SecondViewController {
 //            <#code#>
 //        }
         if sender.tintColor == #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1) {
-           sourceArray?.remove(at: (sourceArray?.index(where: { $0 == (selectedEmoji?.toDictionary())! }))!)
+            sourceArray?.remove(at: (sourceArray?.index(where: { $0 == (selectedEmoji?.toDictionary())! }))!)
             print("delete emoji from favo")
-            NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
-            sender.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        }else if sender.tintColor == #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1) {
-        sender.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
+            //NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
+            saveDataArray(array: sourceArray)
+            sender.tintColor = #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1)
+        } else {
+            print("ffff")
+            sender.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
         let emojiFavo = Emoji(title: title!, description: labelDescrp.text!, symbol: labelSymbol.text!)
         saveData(item: emojiFavo)
         }
     }
     
+    
+    func saveData(item: Emoji) {
+        let dict = selectedEmoji?.toDictionary()
+        if !(sourceArray?.contains(where: { $0 == dict! }))!{
+        sourceArray?.append(dict!)
+        NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
+        print("data save \(sourceArray?.count) ")
+        }
+    }
+    
+    func saveDataArray(array: [[String:String]]?){
+        NSKeyedArchiver.archiveRootObject(array, toFile: filePath)
+    }
+
     var filePath: String {
         // creates a directory to where we are saving it
         let manager = FileManager.default
@@ -130,17 +148,7 @@ extension SecondViewController {
         //3 - creates a new path component and creates a new file called "Data" which is where we will store our Data array.
         return (url!.appendingPathComponent("dataEmojiFavo").path)
     }
-    
-    func saveData(item: Emoji) {
-        let dict = selectedEmoji?.toDictionary()
-        if !(sourceArray?.contains(where: { $0 == dict! }))!{
-        sourceArray?.append(dict!)
-        NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
-        print("data save \(sourceArray?.count) ")
-        }
-        
-    }
-    
+
     func loadData() -> [[String : String]]? {
         if let ourData = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? [[String : String]] {
             return ourData
