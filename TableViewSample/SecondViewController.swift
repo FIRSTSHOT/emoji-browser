@@ -114,11 +114,9 @@ extension SecondViewController {
         if sender.tintColor == #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1) {
             sourceArray?.remove(at: (sourceArray?.index(where: { $0 == (selectedEmoji?.toDictionary())! }))!)
             print("delete emoji from favo")
-            //NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
             saveDataArray(array: sourceArray)
             sender.tintColor = #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1)
         } else {
-            print("ffff")
             sender.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
         let emojiFavo = Emoji(title: title!, description: labelDescrp.text!, symbol: labelSymbol.text!)
         saveData(item: emojiFavo)

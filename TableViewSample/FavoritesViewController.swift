@@ -12,7 +12,7 @@ class FavoritesViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView?
 
-    var sourceArray: [[String:String?]]?
+    var sourceArray: [[String:String]]?
     var selectedEmojiFavo: Emoji?
 
     override func viewDidLoad() {
@@ -72,8 +72,11 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let dict = (sourceArray?[indexPath.row])
             
+            sourceArray?.remove(at: (sourceArray?.index(where: { $0 == (sourceArray?[indexPath.row])! }))!)
+            print("delete emoji from favo")
+            print(sourceArray)
+            SecondViewController().saveDataArray(array: sourceArray)
 
             //Reload tableView
             self.tableView?.reloadData()
