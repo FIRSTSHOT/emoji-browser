@@ -50,6 +50,10 @@ class FavoritesViewController: UIViewController {
     }
 }
 
+class EmojiTableFavoCell: UITableViewCell {
+    @IBOutlet weak var labelEmojiFavoSymbol: UILabel?
+}
+
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     
@@ -61,25 +65,28 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowID", for: indexPath)
+    let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowID", for: indexPath) as! EmojiTableFavoCell
         
         if let emojiFavoDict = sourceArray?[indexPath.row] {
             let emoji = Emoji(dictionory: emojiFavoDict )
-            if (emoji.title?.characters.count)! > 30 {
-                cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:15)
-            }
-            if (emoji.title?.characters.count)! > 40 {
-                cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:13)
-            }
-
-            cell.textLabel?.text = emoji.title
-            cell.detailTextLabel?.text = emoji.symbol
+//            if (emoji.title?.characters.count)! > 30 {
+//                cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:15)
+//            }
+//            if (emoji.title?.characters.count)! > 40 {
+//                cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:13)
+//            }
+//
+//            cell.textLabel?.text = emoji.title
+//            cell.detailTextLabel?.text = emoji.symbol
+                cell.labelEmojiFavoSymbol?.text = emoji.symbol
                 return cell
             
         }
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
     
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -99,7 +106,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         guard let emojiToMove = sourceArray?[sourceIndexPath.row] else { return }
         sourceArray?.remove(at: sourceIndexPath.row)
         sourceArray?.insert(emojiToMove, at: destinationIndexPath.row)
-        SecondViewController().saveDataArray(array: sourceArray)
+        saveDataArray(array: sourceArray)
         self.tableView?.reloadData()
     }
     

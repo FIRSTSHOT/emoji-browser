@@ -9,6 +9,15 @@
 import UIKit
 import Kanna
 
+var filePath: String {
+    // creates a directory to where we are saving it
+    let manager = FileManager.default
+    //2 - this returns an array of urls from our documentDirectory and we take the first path
+    let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first
+    //3 - creates a new path component and creates a new file called "Data" which is where we will store our Data array.
+    return (url!.appendingPathComponent("dataEmojiFavo").path)
+}
+
 class SecondViewController: UIViewController {
     
     let urlEmoji: String = "https://emojipedia.org/"
@@ -38,7 +47,8 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sourceArray = loadData()
-               
+        
+       
         if sourceArray != nil {
             if (sourceArray?.contains(where: { $0["symbol"] == selectedEmoji?.symbol }))!{
                 buttonAddFAvo.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
@@ -113,10 +123,17 @@ class SecondViewController: UIViewController {
     
 }
 
+extension UIViewController {
+    func saveDataArray(array: [[String:String]]?){
+        NSKeyedArchiver.archiveRootObject(array, toFile: filePath)
+    }
+}
+
 extension SecondViewController {
     
     
     @IBAction func addToFavorites(sender: UIBarButtonItem) {
+
         if sourceArray != nil {
         if (sourceArray?.contains(where: { $0["symbol"] == selectedEmoji?.symbol }))! {
             sourceArray?.remove(at: (sourceArray?.index(where: { $0["symbol"] == selectedEmoji?.symbol }))!)
@@ -154,18 +171,9 @@ extension SecondViewController {
         }
     
 
-    func saveDataArray(array: [[String:String]]?){
-        NSKeyedArchiver.archiveRootObject(array, toFile: filePath)
-    }
+    
 
-    var filePath: String {
-        // creates a directory to where we are saving it
-        let manager = FileManager.default
-        //2 - this returns an array of urls from our documentDirectory and we take the first path
-        let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first
-        //3 - creates a new path component and creates a new file called "Data" which is where we will store our Data array.
-        return (url!.appendingPathComponent("dataEmojiFavo").path)
-    }
+    
 
     func loadData() -> [[String : String]]? {
         if let ourData = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? [[String : String]] {

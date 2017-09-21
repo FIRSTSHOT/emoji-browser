@@ -96,6 +96,11 @@ class ViewController: UIViewController {
     
     
 }
+
+class EmojiTableCell : UITableViewCell {
+    @IBOutlet weak var labelEmojiSymbol: UILabel!
+    
+}
 //MARK: UITableViewDataSource
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -113,25 +118,30 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "sampleID", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "sampleID", for: indexPath) as! EmojiTableCell
         
         let category = sectionsEmojis[indexPath.section]
         guard let items = category.items else { return cell }
         
         
         if let emoji = items[indexPath.row] as? Emoji {
-            if (emoji.title?.characters.count)! > 30 {
-              cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:15)
-            }
-            if (emoji.title?.characters.count)! > 40 {
-                cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:13)
-            }
-            cell.textLabel?.text = emoji.title
-            cell.detailTextLabel?.text = emoji.symbol
+//            if (emoji.title?.characters.count)! > 30 {
+//              cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:15)
+//            }
+//            if (emoji.title?.characters.count)! > 40 {
+//                cell.textLabel?.font = UIFont(name: (cell.textLabel?.font.fontName)!, size:13)
+//            }
+//            cell.textLabel?.text = emoji.title
+//            cell.detailTextLabel?.text = emoji.symbol
+        cell.labelEmojiSymbol.text = emoji.symbol
         }
         return cell
     }
-    
+    //size of row
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 150.0;//Choose your custom row height
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
