@@ -21,7 +21,7 @@ class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         self.title = "Favorites"
        
-        sourceArray = SecondViewController().loadData()
+        sourceArray = loadData()
         tableView?.tableFooterView = UIView()
         DispatchQueue.main.async(execute: {
             self.tableView?.reloadData()
@@ -29,7 +29,7 @@ class FavoritesViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        sourceArray = SecondViewController().loadData()
+        sourceArray = loadData()
         self.tableView?.reloadData()
 
     }
@@ -138,7 +138,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
             }
             if let index = sourceArray?.index(where: { $0 == selectedEmoji }) {
             sourceArray?.remove(at: index)
-            SecondViewController().saveDataArray(array: sourceArray)
+            saveDataArray(array: sourceArray)
     
             //Reload tableView
             self.tableView?.reloadData()

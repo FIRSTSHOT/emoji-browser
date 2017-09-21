@@ -124,6 +124,12 @@ class SecondViewController: UIViewController {
 }
 
 extension UIViewController {
+    func loadData() -> [[String : String]]? {
+        if let ourData = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? [[String : String]] {
+            return ourData
+        }
+        return nil
+    }
     func saveDataArray(array: [[String:String]]?){
         NSKeyedArchiver.archiveRootObject(array, toFile: filePath)
     }
@@ -175,12 +181,7 @@ extension SecondViewController {
 
     
 
-    func loadData() -> [[String : String]]? {
-        if let ourData = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? [[String : String]] {
-            return ourData
-        }
-        return nil
-    }
+   
 
 }
 
