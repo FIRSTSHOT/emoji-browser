@@ -25,6 +25,8 @@ class SecondViewController: UIViewController {
         }
     }
     var sourceArray: [[String:String]]?
+    var sourceArray2: [[String:String]]?
+
     
     var flag: Int?
     
@@ -36,13 +38,17 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sourceArray = loadData()
-        
-        if flag == 1 {
-            if (sourceArray?.contains(where: { $0 == (selectedEmoji?.toDictionary())! }))!{
+               
+        if sourceArray != nil {
+            if (sourceArray?.contains(where: { $0["symbol"] == selectedEmoji?.symbol }))!{
                 buttonAddFAvo.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
             }
-            guard let emoji = selectedEmoji else { return }
-            labelSymbol.text = emoji.symbol
+        }
+        guard let emoji = selectedEmoji else { return }
+       
+        labelSymbol.text = emoji.symbol
+        if flag == 1 {
+            
         // background thread
         DispatchQueue.global(qos: .background).async {
             self.descriptionString = self.parsHTML(title: self.title!)
@@ -57,11 +63,6 @@ class SecondViewController: UIViewController {
             }
         }
         } else if flag == 2 {
-            if (sourceArray?.contains(where: { $0 == (selectedEmojiFavo?.toDictionary())! }))!{
-                buttonAddFAvo.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
-            }
-            guard let emoji = selectedEmojiFavo else { return }
-            labelSymbol.text = emoji.symbol
             self.labelDescrp.text = emoji.description
         }
         
@@ -116,9 +117,9 @@ extension SecondViewController {
     
     
     @IBAction func addToFavorites(sender: UIBarButtonItem) {
-        
-        if (sourceArray?.contains(where: { $0 == (selectedEmoji?.toDictionary())! }))! {
-            sourceArray?.remove(at: (sourceArray?.index(where: { $0 == (selectedEmoji?.toDictionary())! }))!)
+        if sourceArray != nil {
+        if (sourceArray?.contains(where: { $0["symbol"] == selectedEmoji?.symbol }))! {
+            sourceArray?.remove(at: (sourceArray?.index(where: { $0["symbol"] == selectedEmoji?.symbol }))!)
             saveDataArray(array: sourceArray)
             sender.tintColor = #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1)
         } else {
@@ -128,17 +129,31 @@ extension SecondViewController {
                 saveData(item: emojiFavo)
         }
         }
+      }else if !(self.labelDescrp.text?.isEmpty)!{
+            sender.tintColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
+            let emojiFavo = Emoji(title: title!, description: descriptionString!, symbol: labelSymbol.text!)
+            saveData(item: emojiFavo)
+        }
     }
     
     
     func saveData(item: Emoji) {
         let dict = item.toDictionary()
-        if !(sourceArray?.contains(where: { $0 == dict }))!{
-        sourceArray?.append(dict)
-        NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
+        if sourceArray != nil {
+            if !(sourceArray?.contains(where: { $0 == dict }))!{
+                sourceArray?.append(dict)
+                NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
+            }
+            
+        }else if sourceArray?.append(dict) == nil
+        {   sourceArray = [dict]
+            NSKeyedArchiver.archiveRootObject(sourceArray, toFile: filePath)
+            
         }
-    }
+        
+        }
     
+
     func saveDataArray(array: [[String:String]]?){
         NSKeyedArchiver.archiveRootObject(array, toFile: filePath)
     }

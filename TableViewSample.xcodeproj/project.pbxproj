@@ -14,7 +14,6 @@
 		175883101F67E03A009E220E /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1758830F1F67E03A009E220E /* Emoji.swift */; };
 		175883141F67EABF009E220E /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175883131F67EABF009E220E /* SecondViewController.swift */; };
 		179E0CE91F713DB9001ADDC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 179E0CE81F713DB9001ADDC8 /* Assets.xcassets */; };
-		179E0CEB1F7164EC001ADDC8 /* SQLiteEmojiDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179E0CEA1F7164EC001ADDC8 /* SQLiteEmojiDB.swift */; };
 		179E0CEE1F716A5F001ADDC8 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179E0CEC1F716A5B001ADDC8 /* SQLite.framework */; };
 		179E0CEF1F716A5F001ADDC8 /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 179E0CEC1F716A5B001ADDC8 /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		17D9FF6C1F71857400D02A7B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D9FF6B1F71857400D02A7B /* FavoritesViewController.swift */; };
@@ -47,7 +46,6 @@
 		1758830F1F67E03A009E220E /* Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
 		175883131F67EABF009E220E /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		179E0CE81F713DB9001ADDC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../.Trash/Assets.xcassets; sourceTree = "<group>"; };
-		179E0CEA1F7164EC001ADDC8 /* SQLiteEmojiDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteEmojiDB.swift; sourceTree = "<group>"; };
 		179E0CEC1F716A5B001ADDC8 /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = "../../../Library/Developer/Xcode/DerivedData/TableViewSample-fruoqnekfzpgychjicyvxzyknify/Build/Products/Debug-iphonesimulator/SQLite.swift/SQLite.framework"; sourceTree = "<group>"; };
 		17D9FF6B1F71857400D02A7B /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		17DE2D0B1F6ABCD6003FE572 /* EmojiCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCategory.swift; sourceTree = "<group>"; };
@@ -104,7 +102,6 @@
 				175883131F67EABF009E220E /* SecondViewController.swift */,
 				17DE2D0B1F6ABCD6003FE572 /* EmojiCategory.swift */,
 				1758830F1F67E03A009E220E /* Emoji.swift */,
-				179E0CEA1F7164EC001ADDC8 /* SQLiteEmojiDB.swift */,
 				175883011F67DB89009E220E /* Main.storyboard */,
 				175883061F67DB89009E220E /* LaunchScreen.storyboard */,
 				179E0CE81F713DB9001ADDC8 /* Assets.xcassets */,
@@ -256,7 +253,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				179E0CEB1F7164EC001ADDC8 /* SQLiteEmojiDB.swift in Sources */,
 				17DE2D0C1F6ABCD6003FE572 /* EmojiCategory.swift in Sources */,
 				17D9FF6C1F71857400D02A7B /* FavoritesViewController.swift in Sources */,
 				175883141F67EABF009E220E /* SecondViewController.swift in Sources */,

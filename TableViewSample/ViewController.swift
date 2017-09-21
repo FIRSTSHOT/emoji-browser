@@ -96,7 +96,7 @@ class ViewController: UIViewController {
     
     
 }
-
+//MARK: UITableViewDataSource
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
    
@@ -161,7 +161,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        var secondViewController = segue.destination as! SecondViewController
+        let secondViewController = segue.destination as! SecondViewController
         secondViewController.flag = 1
         secondViewController.selectedEmoji = emoji
     }
