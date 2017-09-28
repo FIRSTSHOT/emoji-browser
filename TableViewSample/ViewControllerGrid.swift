@@ -12,6 +12,11 @@ class  ViewControllerGrid:  UIViewController{
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBAction func buttonToList(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "segueList", sender: self)
+    }
+    
+    
     var sectionsEmojis: [EmojiCategory] = []
     var selectedEmoji: Emoji?
     
@@ -127,7 +132,6 @@ extension ViewControllerGrid: UICollectionViewDelegate, UICollectionViewDataSour
             }else{
                 headerView.labelHeader.text =  ""
             }
-            //headerView.textLabel.text = shops[indexPath.section]["shop_name"] as? String
             
             return headerView
             
@@ -135,5 +139,24 @@ extension ViewControllerGrid: UICollectionViewDelegate, UICollectionViewDataSour
             
             assert(false, "Unexpected element kind")
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let category = sectionsEmojis[indexPath.section]
+        guard let items = category.items else { return }
+        selectedEmoji = items[indexPath.row]
+        performSegue(withIdentifier: "segueDetailGrid", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "segueDetailGrid" {
+        guard let emoji = selectedEmoji else { return }
+        
+        let secondViewController = segue.destination as! SecondViewController
+        secondViewController.flag = 1
+        secondViewController.selectedEmoji = emoji
+    }
     }
 }

@@ -13,13 +13,13 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView?
     
+    @IBAction func buttonGrid(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "segueGrid", sender: self)
+    }
+    
     var sectionsEmojis: [EmojiCategory] = []
-    
-
-    
     var selectedEmoji: Emoji?
     
-    // apple Mach-O Linker Error Linker command failed with exit code 1 use -v see invocation
     
     
     override func viewDidLoad() {
@@ -167,6 +167,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     //segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueDetail" {
         guard let emoji = selectedEmoji else {
             return
         }
@@ -174,5 +175,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         let secondViewController = segue.destination as! SecondViewController
         secondViewController.flag = 1
         secondViewController.selectedEmoji = emoji
+    }
     }
 }
