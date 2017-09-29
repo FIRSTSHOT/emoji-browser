@@ -57,6 +57,23 @@ class SecondViewController: UIViewController {
         guard let emoji = selectedEmoji else { return }
        
         labelSymbol.text = emoji.symbol
+        
+        if flag == 3 {
+            
+            // background thread
+            DispatchQueue.global(qos: .background).async {
+                self.descriptionString = self.parsHTML(title: self.title!)
+                
+                DispatchQueue.main.async {
+                    guard self.descriptionString != "" else
+                    {   self.labelSymbol.text = "X"
+                        self.labelDescrp.text = " "
+                        return
+                    }
+                    self.labelDescrp.text = self.descriptionString
+                }
+            }
+        }
         if flag == 1 {
             
         // background thread
