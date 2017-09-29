@@ -10,7 +10,13 @@ import UIKit
 
 class EmojiViewController: UIViewController {
     
-     var tableView: UITableView!
+    lazy var tableView: UITableView! = {
+        let tb = UITableView(frame: self.view.bounds)
+        tb.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
+        tb.dataSource = self as UITableViewDataSource
+        tb.delegate = self  as UITableViewDelegate
+        return tb
+    }()
      var collectionView: UICollectionView?
     
     var sectionsEmojis: [EmojiCategory] = []
@@ -18,16 +24,27 @@ class EmojiViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        parseJSON()
+        
+        
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    //    layout.sectionInset = UIEdgeInsets(top: 20, left: 5, bottom: 0, right: 5)
+        
+        collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
+        collectionView?.register(CustomCollectionViewCellVC.self, forCellWithReuseIdentifier: NSStringFromClass(CustomCollectionViewCellVC.self))
+        collectionView?.backgroundColor = UIColor.white
+        
         configureSegmentControl()
+        parseJSON()
+        
     }
     func changeView(sender : UISegmentedControl)  {
         switch sender.selectedSegmentIndex {
         case 0:
             configureTableView()
-            DispatchQueue.main.async(execute: {
-                self.tableView?.reloadData()
-            })
+          
         case 1:
             configureCollectionView()
         default:
@@ -39,35 +56,23 @@ class EmojiViewController: UIViewController {
         segControl.selectedSegmentIndex = 0
         let frame = UIScreen.main.bounds
         
-        segControl.frame = CGRect(x: frame.minX + 30, y: frame.minY + 50, width: frame.width - 100, height: frame.height*0.1)
-        segControl.layer.cornerRadius = 5.0
+        segControl.frame = CGRect(x: frame.minX + 30, y: frame.minY + 50, width: frame.width - 100, height: 0)
         segControl.setTitleTextAttributes([ NSFontAttributeName: UIFont(name: "HelveticaNeue", size: 20.0)! ], for: .normal)
         segControl.addTarget(self, action: #selector(changeView), for: .valueChanged)
         configureTableView()
         self.navigationItem.titleView = segControl
-
     }
     func configureTableView()  {
-        
-        tableView = UITableView(frame: view.bounds)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
-        tableView.dataSource = self as UITableViewDataSource
-        tableView.delegate = self  as UITableViewDelegate
+        collectionView?.removeFromSuperview()
         self.view.addSubview(tableView)
-       
+        DispatchQueue.main.async(execute: {
+            self.collectionView?.reloadData()
+        })
     }
     
     func configureCollectionView()
     {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 5, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: 90, height: 80)
-        
-        collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
-        collectionView?.register(CustomCollectionViewCellVC.self, forCellWithReuseIdentifier: NSStringFromClass(CustomCollectionViewCellVC.self))
-        collectionView?.backgroundColor = UIColor.white
+       tableView.removeFromSuperview()
         self.view.addSubview(collectionView!)
         DispatchQueue.main.async(execute: {
             self.collectionView?.reloadData()
@@ -108,7 +113,7 @@ class EmojiViewController: UIViewController {
                             
                             var existingCategory = self.sectionsEmojis[existingIndex]
                             
-                            if var items = existingCategory.items as? [Emoji] {
+                            if var items = existingCategory.items {
                                 items.append(emoji)
                                 existingCategory.items = items
                                 self.sectionsEmojis[existingIndex] = existingCategory
@@ -122,9 +127,9 @@ class EmojiViewController: UIViewController {
                         
                     }
                 }
-//                DispatchQueue.main.async(execute: {
-//                    self.collectionView?.reloadData()
-//                })
+                DispatchQueue.main.async(execute: {
+                    self.tableView?.reloadData()
+                })
                 
             }
         }
@@ -188,7 +193,7 @@ extension EmojiViewController: UITableViewDelegate, UITableViewDataSource  {
     
 }
 
-extension EmojiViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension EmojiViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     // number of item in section
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
@@ -198,6 +203,11 @@ extension EmojiViewController: UICollectionViewDelegate, UICollectionViewDataSou
         }
         return 0
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 100, height: 80)
+    }
+    
     // number of section
     func numberOfSections(in collectionView: UICollectionView) -> Int {
 

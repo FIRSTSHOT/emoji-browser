@@ -16,12 +16,20 @@ class CustomCollectionViewCellVC: UICollectionViewCell {
         super.init(frame: frame)
     
         
-        textLabel = UILabel(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-        textLabel.font = UIFont.boldSystemFont(ofSize: 80)
+        textLabel = UILabel()
+        
        
         textLabel.textColor = UIColor.white
         textLabel.textAlignment = .center
         contentView.addSubview(textLabel)
+    }
+    
+    
+    override func layoutSubviews() {
+        textLabel.frame = contentView.bounds
+        let size = contentView.frame.width / 2
+        textLabel.font = UIFont.boldSystemFont(ofSize: size)
+        super.layoutSubviews()
     }
     
     required init?(coder aDecoder: NSCoder) {
