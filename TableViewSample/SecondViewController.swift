@@ -12,9 +12,9 @@ import Kanna
 var filePath: String {
     // creates a directory to where we are saving it
     let manager = FileManager.default
-    //2 - this returns an array of urls from our documentDirectory and we take the first path
+    //this returns an array of urls from our documentDirectory and we take the first path
     let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first
-    //3 - creates a new path component and creates a new file called "Data" which is where we will store our Data array.
+    //creates a new path component and creates a new file called "Data" which is where we will store our Data array.
     return (url!.appendingPathComponent("dataEmojiFavo").path)
 }
 
@@ -57,23 +57,6 @@ class SecondViewController: UIViewController {
         guard let emoji = selectedEmoji else { return }
        
         labelSymbol.text = emoji.symbol
-        
-        if flag == 3 {
-            
-            // background thread
-            DispatchQueue.global(qos: .background).async {
-                self.descriptionString = self.parsHTML(title: self.title!)
-                
-                DispatchQueue.main.async {
-                    guard self.descriptionString != "" else
-                    {   self.labelSymbol.text = "X"
-                        self.labelDescrp.text = " "
-                        return
-                    }
-                    self.labelDescrp.text = self.descriptionString
-                }
-            }
-        }
         if flag == 1 {
             
         // background thread
@@ -126,11 +109,9 @@ class SecondViewController: UIViewController {
         }
         if showString != nil{
             // delete text start with "Copy and paste this emoji"
-           
             guard let range = showString?.range(of: "Copy and paste this emoji") else {
                 return showString!
             }
-            
             showString = showString?.substring(with:(showString?.startIndex)!..<range.lowerBound)
             return showString!
             }
@@ -192,14 +173,6 @@ extension SecondViewController {
         }
         
         }
-    
-
-    
-
-    
-
-   
-
 }
 
 

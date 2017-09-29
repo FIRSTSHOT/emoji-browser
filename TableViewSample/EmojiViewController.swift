@@ -16,36 +16,32 @@ class EmojiViewController: UIViewController {
     var sectionsEmojis: [EmojiCategory] = []
     var selectedEmoji: Emoji?
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-   
         parseJSON()
         configureSegmentControl()
-        
-        
     }
     func changeView(sender : UISegmentedControl)  {
         switch sender.selectedSegmentIndex {
         case 0:
             configureTableView()
+            DispatchQueue.main.async(execute: {
+                self.tableView?.reloadData()
+            })
         case 1:
             configureCollectionView()
         default:
-            configureTableView()
-            
+            break
         }
     }
     func configureSegmentControl() {
-        var segControl = UISegmentedControl(items:["list", "grid"])
+        let segControl = UISegmentedControl(items:["list", "grid"])
         segControl.selectedSegmentIndex = 0
         let frame = UIScreen.main.bounds
         
-        segControl.frame = CGRect(x: frame.minX + 30, y: frame.minY + 50, width: frame.width - 50, height: frame.height*0.1)
+        segControl.frame = CGRect(x: frame.minX + 30, y: frame.minY + 50, width: frame.width - 100, height: frame.height*0.1)
         segControl.layer.cornerRadius = 5.0
-       
+        segControl.setTitleTextAttributes([ NSFontAttributeName: UIFont(name: "HelveticaNeue", size: 20.0)! ], for: .normal)
         segControl.addTarget(self, action: #selector(changeView), for: .valueChanged)
         configureTableView()
         self.navigationItem.titleView = segControl
@@ -58,9 +54,7 @@ class EmojiViewController: UIViewController {
         tableView.dataSource = self as UITableViewDataSource
         tableView.delegate = self  as UITableViewDelegate
         self.view.addSubview(tableView)
-        DispatchQueue.main.async(execute: {
-            self.tableView?.reloadData()
-        })
+       
     }
     
     func configureCollectionView()
@@ -120,7 +114,6 @@ class EmojiViewController: UIViewController {
                                 self.sectionsEmojis[existingIndex] = existingCategory
                             }
                         } else {
-                            //let newCateg = ["title": category, "items": [emoji] ] as [String : Any]
                             let newCateg = EmojiCategory(category: category, items: [emoji])
                             self.sectionsEmojis.append(newCateg)
                         }
@@ -181,7 +174,6 @@ extension EmojiViewController: UITableViewDelegate, UITableViewDataSource  {
         }else{
             return ""
         }
-        return ""
     }
     // selected cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
